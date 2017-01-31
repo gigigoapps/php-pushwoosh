@@ -18,6 +18,7 @@ use Gomoob\Pushwoosh\Model\Request\CreateTargetedMessageRequest;
 use Gomoob\Pushwoosh\Model\Request\DeleteMessageRequest;
 use Gomoob\Pushwoosh\Model\Request\GetNearestZoneRequest;
 use Gomoob\Pushwoosh\Model\Request\GetTagsRequest;
+use Gomoob\Pushwoosh\Model\Request\AddTagRequest;
 use Gomoob\Pushwoosh\Model\Request\PushStatRequest;
 use Gomoob\Pushwoosh\Model\Request\RegisterDeviceRequest;
 use Gomoob\Pushwoosh\Model\Request\SetBadgeRequest;
@@ -29,6 +30,7 @@ use Gomoob\Pushwoosh\Model\Response\CreateTargetedMessageResponse;
 use Gomoob\Pushwoosh\Model\Response\DeleteMessageResponse;
 use Gomoob\Pushwoosh\Model\Response\GetNearestZoneResponse;
 use Gomoob\Pushwoosh\Model\Response\GetTagsResponse;
+use Gomoob\Pushwoosh\Model\Response\AddTagResponse;
 use Gomoob\Pushwoosh\Model\Response\PushStatResponse;
 use Gomoob\Pushwoosh\Model\Response\RegisterDeviceResponse;
 use Gomoob\Pushwoosh\Model\Response\SetBadgeResponse;
@@ -204,6 +206,19 @@ class Pushwoosh implements IPushwoosh
         $response = $this->cURLClient->pushwooshCall('getNearestZone', $getNearestZoneRequest->jsonSerialize());
 
         return GetNearestZoneResponse::create($response);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addTag(AddTagRequest $addTagRequest)
+    {
+        // If the 'auth' parameter is not set in the request we try to get it from the Pushwoosh client
+        $this->setAuthIfNotSet($addTagRequest);        
+
+        $response = $this->cURLClient->pushwooshCall('addTag', $addTagRequest->jsonSerialize());
+
+        return AddTagResponse::create($response);
     }
 
     /**
