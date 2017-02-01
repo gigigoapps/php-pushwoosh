@@ -7,6 +7,9 @@ namespace Gomoob\Pushwoosh\Model\Response;
  */
 class AddTagResponse extends AbstractResponse
 {
+
+    private $response;
+
     /**
      * Utility function used to create a new instance from a JSON string.
      *
@@ -19,7 +22,18 @@ class AddTagResponse extends AbstractResponse
         $AddTagResponse = new AddTagResponse();
         $AddTagResponse->setStatusCode($json['status_code']);
         $AddTagResponse->setStatusMessage($json['status_message']);
+        $AddTagResponse->setResponse($json['response']);
 
         return $AddTagResponse;
     }
+
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    public function setResponse($response)
+    {
+        $this->response = $response;
+    }    
 }
